@@ -1,0 +1,8 @@
+@startuml
+class com.miumg.sistemabiblioteca.flyweight.BookFactory {
+- {static} Map<String,IBook> bookMap
++ {static} IBook getBook(String)
+}
+
+
+@enduml

@@ -1,0 +1,141 @@
+@startuml
+class com.miumg.sistemabiblioteca.composite.BookItem {
+- String title
++ void showDetails()
++ void display()
+}
+
+
+interface com.miumg.sistemabiblioteca.adapter.IBook {
+~ void display()
+}
+
+abstract class com.miumg.sistemabiblioteca.bridge.bookview.BookView {
+# BookData bookData
++ {abstract}void display()
+}
+
+
+class com.miumg.sistemabiblioteca.composite.BookCategory {
+- String name
+- List<LibraryComponent> components
++ void addComponent(LibraryComponent)
++ void showDetails()
+}
+
+
+class com.miumg.sistemabiblioteca.facade.Book {
+- String title
++ String getTitle()
++ void display()
+}
+
+
+interface com.miumg.sistemabiblioteca.bridge.bookdata.BookData {
+~ String getContent()
+}
+
+class com.miumg.sistemabiblioteca.decorator.HighlightedIBook {
++ void display()
+}
+
+class com.miumg.sistemabiblioteca.adapter.pdf.PdfAdapter {
+- PdfBook pdfBook
++ void display()
+}
+
+
+class com.miumg.sistemabiblioteca.adapter.pdf.PdfBook {
++ void showPdf()
++ void display()
+}
+
+class com.miumg.sistemabiblioteca.facade.LibraryFacade {
+- BookCollection bookCollection
++ void addBookToLibrary(String)
++ void searchAndDisplayBooks(String)
+}
+
+
+class com.miumg.sistemabiblioteca.decorator.NotedBook {
++ void display()
+}
+
+class com.miumg.sistemabiblioteca.adapter.epub.EpubBook {
++ void displayEpub()
+}
+
+class com.miumg.sistemabiblioteca.bridge.bookdata.DatabaseBookData {
++ String getContent()
+}
+
+abstract class com.miumg.sistemabiblioteca.decorator.IBookDecorator {
+# IBook decoratedIBook
++ void display()
+}
+
+
+interface com.miumg.sistemabiblioteca.composite.LibraryComponent {
+~ void showDetails()
+}
+
+class com.miumg.sistemabiblioteca.bridge.bookview.DetailedBookView {
++ void display()
+}
+
+class com.miumg.sistemabiblioteca.bridge.bookdata.CloudBookData {
++ String getContent()
+}
+
+class com.miumg.sistemabiblioteca.flyweight.BookFactory {
+- {static} Map<String,IBook> bookMap
++ {static} IBook getBook(String)
+}
+
+
+class com.miumg.sistemabiblioteca.facade.BookCollection {
+- List<Book> books
++ void addBook(IBook)
++ List<Book> searchBooks(String)
+}
+
+
+class com.miumg.sistemabiblioteca.proxy.BookProxy {
+- Realbook realBook
+- String title
+- boolean isAuthorized
++ void display()
+}
+
+
+class com.miumg.sistemabiblioteca.adapter.epub.EpubAdapter {
+- EpubBook epubBook
++ void display()
+}
+
+
+class com.miumg.sistemabiblioteca.proxy.Realbook {
+- String title
+- void loadFromDisk()
++ void display()
+}
+
+
+
+
+com.miumg.sistemabiblioteca.composite.LibraryComponent <|.. com.miumg.sistemabiblioteca.composite.BookItem
+com.miumg.sistemabiblioteca.adapter.IBook <|.. com.miumg.sistemabiblioteca.composite.BookItem
+com.miumg.sistemabiblioteca.composite.LibraryComponent <|.. com.miumg.sistemabiblioteca.composite.BookCategory
+com.miumg.sistemabiblioteca.adapter.IBook <|.. com.miumg.sistemabiblioteca.facade.Book
+com.miumg.sistemabiblioteca.decorator.IBookDecorator <|-- com.miumg.sistemabiblioteca.decorator.HighlightedIBook
+com.miumg.sistemabiblioteca.adapter.IBook <|.. com.miumg.sistemabiblioteca.adapter.pdf.PdfAdapter
+com.miumg.sistemabiblioteca.adapter.IBook <|.. com.miumg.sistemabiblioteca.adapter.pdf.PdfBook
+com.miumg.sistemabiblioteca.decorator.IBookDecorator <|-- com.miumg.sistemabiblioteca.decorator.NotedBook
+com.miumg.sistemabiblioteca.bridge.bookdata.BookData <|.. com.miumg.sistemabiblioteca.bridge.bookdata.DatabaseBookData
+com.miumg.sistemabiblioteca.adapter.IBook <|.. com.miumg.sistemabiblioteca.decorator.IBookDecorator
+com.miumg.sistemabiblioteca.bridge.bookview.BookView <|-- com.miumg.sistemabiblioteca.bridge.bookview.DetailedBookView
+com.miumg.sistemabiblioteca.bridge.bookdata.BookData <|.. com.miumg.sistemabiblioteca.bridge.bookdata.CloudBookData
+com.miumg.sistemabiblioteca.adapter.IBook <|.. com.miumg.sistemabiblioteca.proxy.BookProxy
+com.miumg.sistemabiblioteca.adapter.IBook <|.. com.miumg.sistemabiblioteca.adapter.epub.EpubAdapter
+com.miumg.sistemabiblioteca.adapter.IBook <|.. com.miumg.sistemabiblioteca.proxy.Realbook
+@enduml
